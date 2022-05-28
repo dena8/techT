@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
 
 import static com.example.techtopic.constants.Constants.OUTPUT_DELIMITER;
+import static com.example.techtopic.constants.Constants.OUTPUT_ERROR_MASSAGE;
 
 @Service
 public class GetServiceImpl implements GetService {
@@ -19,12 +20,11 @@ public class GetServiceImpl implements GetService {
         this.stringBuilder = stringBuilder;
     }
 
-
     @Override
     public String getResultData(List<String> inputData) {
         String key = inputData.get(0);
         stringBuilder.setLength(0);
         Optional<String> value = Optional.ofNullable(this.dataStorage.get(key));
-        return value.isEmpty() ? this.stringBuilder.append("Err: no value for ").append(key).toString() : this.stringBuilder.append(key).append(OUTPUT_DELIMITER).append(value.get()).toString();
+        return value.isEmpty() ? this.stringBuilder.append(OUTPUT_ERROR_MASSAGE).append(key).toString() : this.stringBuilder.append(key).append(OUTPUT_DELIMITER).append(value.get()).toString();
     }
 }
