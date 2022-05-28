@@ -35,8 +35,9 @@ public class CommandController {
         } else if (input.startsWith(LOAD_COMMAND)) {
             String result = this.fileService.loadFile(inputData);
             System.out.println(result);
-        } else if(input.startsWith(LOAD_COMMAND)){
-
+        } else if(input.startsWith(SAVE_COMMAND)){
+            String result = this.fileService.saveInFile(inputData);
+            System.out.println(result);
         }
     }
 }

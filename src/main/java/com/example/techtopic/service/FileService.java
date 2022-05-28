@@ -7,4 +7,5 @@ import java.util.List;
 public interface FileService {
     String loadFile(List<String> inputData) throws IOException;
 
+    String saveInFile(List<String> inputData) throws IOException;
 }
