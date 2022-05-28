@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
+import static com.example.techtopic.constants.Constants.OUTPUT_DELIMITER;
+
 @Service
 public class SetServiceImpl implements SetService {
     private final ConcurrentMap<String,String> dataStorage;
@@ -16,11 +18,10 @@ public class SetServiceImpl implements SetService {
         this.stringBuilder = stringBuilder;
     }
 
-
     @Override
     public String setData(List<String> data) {
         stringBuilder.setLength(0);
         this.dataStorage.put(data.get(0),data.get(1));
-        return  stringBuilder.append("Saved ").append(data.get(0)).append("=").append(data.get(1)).toString();
+        return  stringBuilder.append("Saved ").append(data.get(0)).append(OUTPUT_DELIMITER).append(data.get(1)).toString();
     }
 }

@@ -5,4 +5,6 @@ public class Constants {
     public static final String GET_COMMAND = "get";
     public static final String SET_COMMAND = "set";
     public static final String LOAD_COMMAND = "load";
+
+    public static final String OUTPUT_DELIMITER = " = ";
 }
