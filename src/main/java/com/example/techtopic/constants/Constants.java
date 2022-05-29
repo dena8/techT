@@ -12,5 +12,8 @@ public class Constants {
     public static final String OUTPUT_ERROR_MASSAGE = "Err: no value for ";
     public static final String OUTPUT_LOAD_MASSAGE = "Data from  is loaded";
     public static final String OUTPUT_SAVE_MASSAGE = "Data exported to ";
-    public static final String CLASSPATH = "classpath:";
+    public static final String OUTPUT_WORD_COUNT_MASSAGE = "Words in";
+
+    public static final String OUTPUT_WRONG_COMMAND_MASSAGE = "Enter valid command, please";
+
 }

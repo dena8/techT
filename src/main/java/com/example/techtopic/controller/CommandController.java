@@ -39,7 +39,7 @@ public class CommandController {
             String result = this.fileService.saveInFile(inputData);
             System.out.println(result);
         }else{
-            System.out.println("Enter valid command, please");
+            System.out.println(OUTPUT_WRONG_COMMAND_MASSAGE);
         }
     }
 }

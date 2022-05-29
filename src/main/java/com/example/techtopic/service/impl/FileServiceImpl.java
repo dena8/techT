@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
@@ -37,8 +38,7 @@ public class FileServiceImpl implements FileService {
     public String saveInFile(List<String> inputData) throws IOException {
         stringBuilder.setLength(0);
         String path = getPath(inputData);
-        FileWriter writer = new FileWriter(path);
-        BufferedWriter bw = new BufferedWriter(writer);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(path));
 
         this.dataStorage.forEach((key, value) -> {
             try {
@@ -49,6 +49,20 @@ public class FileServiceImpl implements FileService {
         });
         bw.close();
         return stringBuilder.append(OUTPUT_SAVE_MASSAGE).insert(OUTPUT_SAVE_MASSAGE.length(),inputData.get(0)).toString();
+    }
+
+    @Override
+    public String findWordCount(String inputData) throws IOException {
+        List<String> inputSplit = Arrays.stream(inputData.split("\\s+")).skip(1).toList();
+        String path = getPath(inputSplit);
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String line;
+        int count=0;
+        while ((line = br.readLine()) != null) {
+            count+= Arrays.stream(line.split("\\s+")).count();
+        }
+        br.close();
+        return String.format("%s %s: %s",OUTPUT_WORD_COUNT_MASSAGE,inputSplit.get(0),count);
     }
 
     private String getPath(List<String> inputData) throws FileNotFoundException {
