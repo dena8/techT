@@ -38,6 +38,8 @@ public class CommandController {
         } else if(input.startsWith(SAVE_COMMAND)){
             String result = this.fileService.saveInFile(inputData);
             System.out.println(result);
+        }else{
+            System.out.println("Enter valid command, please");
         }
     }
 }
