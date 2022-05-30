@@ -1,8 +1,8 @@
 package com.example.techtopic.service.impl;
 
+import com.example.techtopic.service.FileManageService;
 import com.example.techtopic.service.FileService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.util.Arrays;
@@ -15,17 +15,18 @@ import static com.example.techtopic.constants.Constants.*;
 public class FileServiceImpl implements FileService {
     private final ConcurrentMap<String, String> dataStorage;
     private final StringBuilder stringBuilder;
+    private final FileManageService fileManageService;
 
-    public FileServiceImpl(ConcurrentMap<String, String> dataStorage, StringBuilder stringBuilder) {
+    public FileServiceImpl(ConcurrentMap<String, String> dataStorage, StringBuilder stringBuilder, FileManageService fileManageService) {
         this.dataStorage = dataStorage;
         this.stringBuilder = stringBuilder;
+        this.fileManageService = fileManageService;
     }
 
     @Override
     public String loadFile(List<String> inputData) throws IOException {
         stringBuilder.setLength(0);
-        String path = getPath(inputData);
-        BufferedReader br = new BufferedReader(new FileReader(path));
+        BufferedReader br = this.fileManageService.getBufferReader(inputData.get(0));
         String line;
         while ((line = br.readLine()) != null) {
             String[] splitLine = line.split(OUTPUT_DELIMITER);
@@ -37,8 +38,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String saveInFile(List<String> inputData) throws IOException {
         stringBuilder.setLength(0);
-        String path = getPath(inputData);
-        BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+        BufferedWriter bw = this.fileManageService.getBufferWriter(inputData.get(0));
 
         this.dataStorage.forEach((key, value) -> {
             try {
@@ -54,8 +54,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String findWordCount(String inputData) throws IOException {
         List<String> inputSplit = Arrays.stream(inputData.split("\\s+")).skip(1).toList();
-        String path = getPath(inputSplit);
-        BufferedReader br = new BufferedReader(new FileReader(path));
+        BufferedReader br = this.fileManageService.getBufferReader(inputSplit.get(0));
         String line;
         int count=0;
         while ((line = br.readLine()) != null) {
@@ -65,8 +64,4 @@ public class FileServiceImpl implements FileService {
         return String.format("%s %s: %s",OUTPUT_WORD_COUNT_MASSAGE,inputSplit.get(0),count);
     }
 
-    private String getPath(List<String> inputData) throws FileNotFoundException {
-        File file = ResourceUtils.getFile(inputData.get(0));
-        return file.getAbsolutePath();
-    }
 }

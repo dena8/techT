@@ -9,8 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.Scanner;
 
-import static com.example.techtopic.constants.Constants.COUNT_WORDS_COMMAND;
-import static com.example.techtopic.constants.Constants.REVERSE_COMMAND;
+import static com.example.techtopic.constants.Constants.*;
 
 @SpringBootApplication
 public class TechTopicApplication implements CommandLineRunner {
@@ -26,17 +25,15 @@ public class TechTopicApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(TechTopicApplication.class, args);
-
-
     }
 
     @Override
     public void run(String... args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter data, please:");
+        System.out.println(INITIAL_MASSAGE);
         String input = scanner.nextLine();
 
-        while (!input.equals("exit")) {
+        while (!input.equals(EXIT_COMMAND)) {
             if (input.startsWith(REVERSE_COMMAND)||input.startsWith(COUNT_WORDS_COMMAND)) {
                 this.bonusController.getData(input);
             } else  {

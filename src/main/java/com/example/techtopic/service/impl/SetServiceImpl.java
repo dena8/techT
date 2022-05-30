@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 import static com.example.techtopic.constants.Constants.OUTPUT_DELIMITER;
+import static com.example.techtopic.constants.Constants.OUTPUT_SET_MASSAGE;
 
 @Service
 public class SetServiceImpl implements SetService {
@@ -22,6 +23,6 @@ public class SetServiceImpl implements SetService {
     public String setData(List<String> data) {
         stringBuilder.setLength(0);
         this.dataStorage.put(data.get(0),data.get(1));
-        return  stringBuilder.append("Saved ").append(data.get(0)).append(OUTPUT_DELIMITER).append(data.get(1)).toString();
+        return  stringBuilder.append(OUTPUT_SET_MASSAGE).append(data.get(0)).append(OUTPUT_DELIMITER).append(data.get(1)).toString();
     }
 }
