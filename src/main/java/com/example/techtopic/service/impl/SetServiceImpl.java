@@ -4,6 +4,7 @@ import com.example.techtopic.service.SetService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentMap;
 
 import static com.example.techtopic.constants.Constants.OUTPUT_DELIMITER;
@@ -20,9 +21,10 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
-    public String setData(List<String> data) {
+    public CompletableFuture<String> setData(List<String> data) {
         stringBuilder.setLength(0);
         this.dataStorage.put(data.get(0),data.get(1));
-        return  stringBuilder.append(OUTPUT_SET_MASSAGE).append(data.get(0)).append(OUTPUT_DELIMITER).append(data.get(1)).toString();
+        String result=  stringBuilder.append(OUTPUT_SET_MASSAGE).append(data.get(0)).append(OUTPUT_DELIMITER).append(data.get(1)).toString();
+        return CompletableFuture.completedFuture(result);
     }
 }

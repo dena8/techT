@@ -1,7 +1,8 @@
 package com.example.techtopic.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface GetService {
-    String getResultData(List<String> inputData);
+    CompletableFuture<String> getResultData(List<String> inputData);
 }

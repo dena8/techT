@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentMap;
 
 import static com.example.techtopic.constants.Constants.OUTPUT_DELIMITER;
@@ -21,10 +22,11 @@ public class GetServiceImpl implements GetService {
     }
 
     @Override
-    public String getResultData(List<String> inputData) {
+    public CompletableFuture<String> getResultData(List<String> inputData) {
         String key = inputData.get(0);
         stringBuilder.setLength(0);
         Optional<String> value = Optional.ofNullable(this.dataStorage.get(key));
-        return value.isEmpty() ? this.stringBuilder.append(OUTPUT_ERROR_MASSAGE).append(key).toString() : this.stringBuilder.append(key).append(OUTPUT_DELIMITER).append(value.get()).toString();
+        String result = value.isEmpty() ? this.stringBuilder.append(OUTPUT_ERROR_MASSAGE).append(key).toString() : this.stringBuilder.append(key).append(OUTPUT_DELIMITER).append(value.get()).toString();
+        return CompletableFuture.completedFuture(result);
     }
 }

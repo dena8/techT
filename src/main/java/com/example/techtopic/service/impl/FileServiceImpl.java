@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentMap;
 
 import static com.example.techtopic.constants.Constants.*;
@@ -24,7 +25,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String loadFile(List<String> inputData) throws IOException {
+    public CompletableFuture<String> loadFile(List<String> inputData) throws IOException {
         stringBuilder.setLength(0);
         BufferedReader br = this.fileManageService.getBufferReader(inputData.get(0));
         String line;
@@ -33,10 +34,12 @@ public class FileServiceImpl implements FileService {
             this.dataStorage.put(splitLine[0], splitLine[1]);
         }
         br.close();
-        return stringBuilder.append(OUTPUT_LOAD_MASSAGE).insert(10, inputData.get(0)).toString();
+        String result= stringBuilder.append(OUTPUT_LOAD_MASSAGE).insert(10, inputData.get(0)).toString();
+        return CompletableFuture.completedFuture(result);
+
     }
     @Override
-    public String saveInFile(List<String> inputData) throws IOException {
+    public CompletableFuture<String>  saveInFile(List<String> inputData) throws IOException {
         stringBuilder.setLength(0);
         BufferedWriter bw = this.fileManageService.getBufferWriter(inputData.get(0));
 
@@ -48,7 +51,8 @@ public class FileServiceImpl implements FileService {
             }
         });
         bw.close();
-        return stringBuilder.append(OUTPUT_SAVE_MASSAGE).insert(OUTPUT_SAVE_MASSAGE.length(),inputData.get(0)).toString();
+        String result=stringBuilder.append(OUTPUT_SAVE_MASSAGE).insert(OUTPUT_SAVE_MASSAGE.length(),inputData.get(0)).toString();
+        return CompletableFuture.completedFuture(result);
     }
 
     @Override

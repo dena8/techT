@@ -1,9 +1,10 @@
 package com.example.techtopic.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface SetService {
 
-    String setData(List<String> data);
+    CompletableFuture<String> setData(List<String> data);
 
 }
