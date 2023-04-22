@@ -55,15 +55,14 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String findWordCount(String inputData) throws IOException {
-        List<String> inputSplit = Arrays.stream(inputData.split("\\s+")).skip(1).toList();
-        BufferedReader br = this.fileManageService.getBufferReader(inputSplit.get(0));
+        BufferedReader br = this.fileManageService.getBufferReader(inputData);
         String line;
         int count = 0;
         while ((line = br.readLine()) != null) {
             count += Arrays.stream(line.split("\\s+")).count();
         }
         br.close();
-        return String.format("%s %s: %s", OUTPUT_WORD_COUNT_MASSAGE, inputSplit.get(0), count);
+        return String.format("%s %s: %s", OUTPUT_WORD_COUNT_MASSAGE, inputData, count);
     }
 
 }
