@@ -9,7 +9,7 @@ import java.io.*;
 import static com.example.techtopic.constants.Constants.FILE_ERROR_MASSAGE;
 
 @Service
-public class FileManageServiceImpl  implements FileManageService {
+public class FileManageServiceImpl implements FileManageService {
     @Override
     public BufferedReader getBufferReader(String fileName) throws FileNotFoundException {
         File file = ResourceUtils.getFile(fileName);
